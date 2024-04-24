@@ -2,7 +2,7 @@ import express, { Request, Response } from "express";
 import os from "os";
 import process from "process";
 import { Redis } from "ioredis";
-import mysql from "mysql";
+import mysql from "mysql2";
 import { promisify } from "util";
 import fs from "fs";
 const app = express();
@@ -74,7 +74,7 @@ app.get("/", async (req: Request, res: Response) => {
 
     const query = promisify(mysqlConnection.query).bind(mysqlConnection);
 
-    const result = await query("SELEC 1");
+    const result = await query({sql: "SELECT 1"});
     if (result) {
       console.log(result);
       data.mysql = Status.OK;
